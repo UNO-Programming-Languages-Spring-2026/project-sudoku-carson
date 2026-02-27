@@ -1,9 +1,17 @@
-% Sudoku Solver
-%
-% Hints:
-% For subgrid of size n, subgrids can be identified by labels 1..n*n
-% A cell (x,y) can be mapped to the subgrid labeled 1+(((x-1)/n)*n+(y-1)/n)
+row(1..4).
+col(1..4).
+val(1..4).
 
-% Your implementation please...
+cell(X,Y) :- row(X), col(Y).
+
+sudoku(X,Y,N) :- initial(X,Y,N).
+
+{ sudoku(X,Y,N) : val(N) } = 1 :- cell(X,Y), not initial(X,Y,_).
+
+:- row(X), val(N), { sudoku(X,Y,N) : col(Y) } > 1.
+:- row(X), val(N), { sudoku(X,Y,N) : col(Y) } = 0.
+
+:- col(Y), val(N), { sudoku(X,Y,N) : row(X) } > 1.
+:- col(Y), val(N), { sudoku(X,Y,N) : row(X) } = 0.
 
 #show sudoku/3.
